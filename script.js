@@ -359,6 +359,68 @@ function editRecord() {
   document.getElementById("list-heading").scrollIntoView({ behavior: "smooth" });
 }
 
+// ---------- Exporting to CSV ----------
+
+// Wrap a value in quotes so commas in names don't break the CSV file.
+// A leading = + - or @ could be read as a formula by Excel, so we add an apostrophe.
+function csvCell(value) {
+  let text = String(value);
+  if (/^[=+\-@]/.test(text)) text = "'" + text;
+  return '"' + text.replace(/"/g, '""') + '"';
+}
+
+// Turn one saved record into CSV lines (one line per student).
+function recordToLines(record) {
+  return record.entries.map(function (entry) {
+    return [record.course, record.date, entry.id, entry.name, statusLabel(entry.status)]
+      .map(csvCell)
+      .join(",");
+  });
+}
+
+// Make a browser download from CSV text.
+function downloadCsv(filename, lines) {
+  const header = ["Course", "Date", "Student ID", "Full name", "Status"].map(csvCell).join(",");
+  // The \uFEFF at the start helps Excel read names with special characters correctly.
+  const text = "\uFEFF" + [header].concat(lines).join("\r\n");
+  const blob = new Blob([text], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// Export only the record currently shown in section 4.
+function exportRecord() {
+  const record = records[recordKey(viewCourse.value, viewDate.value)];
+  if (!record) {
+    showMessage(viewMsg, "Choose a saved course and date first.", "error");
+    return;
+  }
+  const safeCourse = record.course.replace(/[^a-z0-9]+/gi, "-");
+  downloadCsv(safeCourse + "-" + record.date + ".csv", recordToLines(record));
+  showMessage(viewMsg, "Downloaded the CSV file for " + record.course + " on " + record.date + ".", "success");
+}
+
+// Export every saved record into one CSV file.
+function exportAllRecords() {
+  const keys = Object.keys(records).sort();
+  if (keys.length === 0) {
+    showMessage(viewMsg, "There are no saved records to export.", "error");
+    return;
+  }
+  let lines = [];
+  keys.forEach(function (key) {
+    lines = lines.concat(recordToLines(records[key]));
+  });
+  downloadCsv("all-attendance-records.csv", lines);
+  showMessage(viewMsg, "Downloaded all saved records.", "success");
+}
+
 // ---------- Start the app ----------
 dateInput.value = todayString();
 courseInput.addEventListener("input", loadSession);
@@ -370,6 +432,8 @@ document.getElementById("save-attendance").addEventListener("click", saveAttenda
 viewCourse.addEventListener("change", function () { fillDateOptions(); });
 viewDate.addEventListener("change", showRecord);
 document.getElementById("edit-record").addEventListener("click", editRecord);
+document.getElementById("export-record").addEventListener("click", exportRecord);
+document.getElementById("export-all").addEventListener("click", exportAllRecords);
 
 renderClassList();
 fillCourseOptions();
