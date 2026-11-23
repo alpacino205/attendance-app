@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Attendance Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Presbyterian College Of Education Attendance System</h1>
+    <p>A simple class project tool for recording and reviewing attendance.</p>
+  </header>
+
+  <main>
+    <!-- Storage note -->
+    <p class="note" role="note">
+      <strong>Note:</strong> Records are stored only in this browser on this device.
+      They are not sent anywhere, and clearing your browser data will delete them.
+      
+    </p>
+
+    <!-- 1. Class session -->
+    <section aria-labelledby="session-heading">
+      <h2 id="session-heading">1. Class session</h2>
+      <div class="form-row">
+        <div class="field">
+          <label for="course-name">Course name</label>
+          <input type="text" id="course-name" placeholder="e.g. Curriculum Studies" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="attendance-date">Attendance date</label>
+          <input type="date" id="attendance-date">
+        </div>
+      </div>
+      <p id="session-msg" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- 2. Add student -->
+    <section aria-labelledby="add-heading">
+      <h2 id="add-heading">2. Add a student</h2>
+      <form id="student-form" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="student-id">Student ID</label>
+            <input type="text" id="student-id" placeholder="e.g. S001" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="student-name">Full name</label>
+            <input type="text" id="student-name" placeholder="e.g. Sample Student" autocomplete="off">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add student</button>
+      </form>
+      <p id="student-msg" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- 3. Class list and marking -->
+    <section aria-labelledby="list-heading">
+      <h2 id="list-heading">3. Mark attendance</h2>
+
+      <div class="button-row">
+        <button type="button" id="all-present" class="btn">Mark all present</button>
+        <button type="button" id="all-absent" class="btn">Mark all absent</button>
+      </div>
+
+      <!-- Live totals -->
+      <div class="summary" aria-live="polite">
+        <div class="stat"><span id="count-present">0</span> Present</div>
+        <div class="stat"><span id="count-absent">0</span> Absent</div>
+        <div class="stat"><span id="count-unmarked">0</span> Not yet marked</div>
+      </div>
+
+      <ul id="class-list" class="class-list"></ul>
+
+      <button type="button" id="save-attendance" class="btn btn-primary">Save attendance</button>
+      <p id="list-msg" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- 4. View saved records -->
+    <section aria-labelledby="view-heading" id="view-section">
+      <h2 id="view-heading">4. View saved records</h2>
+      <div class="form-row">
+        <div class="field">
+          <label for="view-course">Course</label>
+          <select id="view-course"></select>
+        </div>
+        <div class="field">
+          <label for="view-date">Date</label>
+          <select id="view-date"></select>
+        </div>
+      </div>
+      <p id="view-msg" class="message" role="status" aria-live="polite"></p>
+      <div id="view-result" hidden>
+        <p id="view-summary" class="summary-line"></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th scope="col">Student ID</th><th scope="col">Full name</th><th scope="col">Status</th></tr>
+            </thead>
+            <tbody id="view-body"></tbody>
+          </table>
+        </div>
+        <button type="button" id="edit-record" class="btn">Edit this record</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">UEW College of Education class project</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+/* ---------- Basic setup ---------- */
+:root {
+  --green: #1d4ed8;
+  --green-dark: #1e3a8a;
+  --bg: #f4f7fd;
+  --card: #ffffff;
+  --text: #17213a;
+  --border: #c7d3ea;
+  --present: #1d4ed8;
+  --absent: #b3261e;
+  --warn: #8a5a00;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* ---------- Layout ---------- */
+.site-header {
+  background: var(--green);
+  color: #fff;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+.site-header h1 { margin: 0 0 0.25rem; font-size: 1.5rem; }
+.site-header p { margin: 0; }
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+h2 { margin: 0 0 0.75rem; font-size: 1.2rem; }
+
+.note {
+  background: #fff8e1;
+  border-left: 4px solid #e0a800;
+  padding: 0.75rem 1rem;
+  margin: 0 0 1rem;
+  border-radius: 4px;
+}
+
+.site-footer { text-align: center; padding: 1rem; color: #55625b; }
+
+/* ---------- Forms ---------- */
+.form-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem; }
+.field { flex: 1 1 220px; display: flex; flex-direction: column; }
+label { font-weight: 600; margin-bottom: 0.25rem; }
+
+input, select {
+  font: inherit;
+  padding: 0.6rem;
+  border: 1px solid #7d8b84;
+  border-radius: 6px;
+  background: #fff;
+  min-height: 44px;
+}
+
+:focus-visible { outline: 3px solid #f0a500; outline-offset: 2px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  min-height: 44px;
+  border: 2px solid var(--green);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--green-dark);
+  cursor: pointer;
+}
+.btn:hover { background: #e3ebfb; }
+.btn-primary { background: var(--green); color: #fff; }
+.btn-primary:hover { background: var(--green-dark); }
+.btn-danger { border-color: var(--absent); color: var(--absent); }
+.btn-danger:hover { background: #fbeaea; }
+.button-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+
+/* ---------- Messages ---------- */
+.message { margin: 0.5rem 0 0; font-weight: 600; min-height: 1.5rem; }
+.message.error { color: var(--absent); }
+.message.success { color: var(--present); }
+
+/* ---------- Summary totals ---------- */
+.summary { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; }
+.stat {
+  flex: 1 1 120px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem;
+  text-align: center;
+}
+.stat span { display: block; font-size: 1.5rem; font-weight: 700; }
+.summary-line { font-weight: 600; }
+
+/* ---------- Class list ---------- */
+.class-list { list-style: none; margin: 0 0 1rem; padding: 0; }
+.class-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.student-info { flex: 1 1 200px; }
+.student-id { color: #55625b; font-size: 0.9rem; }
+.empty-text { color: #55625b; }
+
+.choices { display: flex; gap: 0.5rem; border: 0; padding: 0; margin: 0; }
+.choices label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.4rem 0.75rem;
+  min-height: 44px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.choices input { min-height: 0; }
+
+/* ---------- Table ---------- */
+.table-wrap { overflow-x: auto; margin-bottom: 0.75rem; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid var(--border); }
+th { background: var(--bg); }
+.status-present { color: var(--present); font-weight: 700; }
+.status-absent { color: var(--absent); font-weight: 700; }
+.status-unmarked { color: var(--warn); font-weight: 700; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  .site-header h1 { font-size: 1.25rem; }
+  .btn { width: 100%; }
+  .class-list .btn { width: auto; }
+}
